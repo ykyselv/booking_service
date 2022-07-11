@@ -51,3 +51,9 @@ class ClientlistApiView(generics.ListAPIView):
         minute_appoint = self.request.query_params.get("min")
 
         return get_clients_set(specialist_name, year_appoint, month_appoint, day_appoint, hour_appoint, minute_appoint)
+
+
+
+
+
+

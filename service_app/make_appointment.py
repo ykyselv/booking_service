@@ -51,3 +51,9 @@ def make_appointment(request):
         )
 
     return Response({'post': model_to_dict(new_appoint)})
+
+
+
+
+
+

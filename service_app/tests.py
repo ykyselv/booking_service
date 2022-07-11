@@ -140,3 +140,5 @@ class ClientlistTest(APITestCase):
         response = self.client.post(reverse('makeappoint'), data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual('Специалист с данным именем отсутствует', response.json().get('post'))
+
+

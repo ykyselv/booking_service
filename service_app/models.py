@@ -1,8 +1,4 @@
 from django.db import models
-from django.contrib import messages
-from django.contrib import admin
-from django.core.exceptions import ValidationError
-
 
 class Location(models.Model):
     address = models.CharField(max_length=255)
@@ -58,12 +54,6 @@ class Specialist(models.Model):
         return (
             f'{self.name}({self.specialization}) - Начало приёма({self.schedule.start_appointment}) -- Конец приёма({self.schedule.end_appointment})')
 
-    # из -за этого метода не срабатвают тесты:
-    # def save(self):
-    #      if not Specialist.objects.filter(schedule__start_appointment__lte=self.schedule.start_appointment, location=self.location) and\
-    #         not Specialist.objects.filter(schedule__end_appointment__gte=self.schedule.end_appointment, location=self.location):
-    #         super(Specialist,self).save()
-    #      else:
-    #         #  необходимо вывести ошибку в админ панель!как сделать не знаю)))
-    #         raise ValidationError('Вывести ошибку в админ-панель')
-    #
+
+
+
