@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Location(models.Model):
     address = models.CharField(max_length=255)
 
@@ -48,7 +49,8 @@ class Specialist(models.Model):
     def __str__(self):
         appoint_list = []
         for el in self.schedule.values():
-            appoint_list.append(f'Начало приёма({el.get("start_appointment")}) - Конец приёма({el.get("end_appointment")})')
+            appoint_list.append(
+                f'Начало приёма({el.get("start_appointment")}) - Конец приёма({el.get("end_appointment")})')
 
         name = f'{self.name}({self.specialization})'
         return name + str(appoint_list)

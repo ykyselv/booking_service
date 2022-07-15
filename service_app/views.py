@@ -25,21 +25,20 @@ class SpecialistApiView(generics.ListAPIView):
         hour_appoint = self.request.query_params.get("hour")
         minute_appoint = self.request.query_params.get("min")
         return get_set("Specialist", year_appoint, month_appoint, day_appoint,
-                                   hour_appoint, minute_appoint, specialist_name, specialization)
+                       hour_appoint, minute_appoint, specialist_name, specialization)
 
 
 # To make appointment:
 class Create_appointment(APIView):
     def get(self, request):
-        appoint=Appointment.objects.all()
-        return Response (AppointmentSerializer(appoint, many=True).data)
+        appoint = Appointment.objects.all()
+        return Response(AppointmentSerializer(appoint, many=True).data)
 
-    def post(self,request):
-        serializer=AppointmentSerializer(data=request.data)
+    def post(self, request):
+        serializer = AppointmentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({'post': serializer.data})
-
 
 
 # to get a list of clients with ability to filter
@@ -58,10 +57,5 @@ class ClientlistApiView(generics.ListAPIView):
         hour_appoint = self.request.query_params.get("hour")
         minute_appoint = self.request.query_params.get("min")
 
-        return get_set("Appointment", year_appoint, month_appoint, day_appoint, hour_appoint, minute_appoint, specialist_name)
-
-
-
-
-
-
+        return get_set("Appointment", year_appoint, month_appoint, day_appoint, hour_appoint, minute_appoint,
+                       specialist_name)

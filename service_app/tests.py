@@ -15,17 +15,20 @@ class ClientlistTest(APITestCase):
         # 1st instance of Schedule
         start_schedule_1 = datetime(2022, 7, 7, 9, 0)
         end_schedule_1 = datetime(2022, 7, 7, 18, 0, 0)
-        sched1 = Schedule.objects.create(start_appointment=start_schedule_1, end_appointment=end_schedule_1, location_id=1)
+        sched1 = Schedule.objects.create(start_appointment=start_schedule_1, end_appointment=end_schedule_1,
+                                         location_id=1)
 
         # 2nd instance of Schedule
         start_schedule_2 = datetime(2022, 7, 6, 12, 0, 0)
         end_schedule_2 = datetime(2022, 7, 6, 19, 0, 0)
-        sched2 = Schedule.objects.create(start_appointment=start_schedule_2, end_appointment=end_schedule_2, location_id=2)
+        sched2 = Schedule.objects.create(start_appointment=start_schedule_2, end_appointment=end_schedule_2,
+                                         location_id=2)
 
         # 3rd instance of Schedule
         start_schedule_3 = datetime(2022, 7, 7, 9, 0, 0)
         end_schedule_3 = datetime(2022, 7, 7, 15, 0, 0)
-        sched3 = Schedule.objects.create(start_appointment=start_schedule_3, end_appointment=end_schedule_3, location_id=3)
+        sched3 = Schedule.objects.create(start_appointment=start_schedule_3, end_appointment=end_schedule_3,
+                                         location_id=3)
 
         # 1st instance of Client
         Client.objects.create(id=1, gender='M', name='Ivan Kiselov')
@@ -52,19 +55,15 @@ class ClientlistTest(APITestCase):
         Appointment.objects.create(specialist='Vakulenko Olga Ivanivna', start_appointment=start_appointment_3,
                                    end_appointment=end_appointment_3, client_id=3)
 
-
-
         spec1 = Specialist.objects.create(specialization='massagist', name='Prykhodko Mykola Ivanovych')
 
         spec1.schedule.add(sched1)
-
 
         spec2 = Specialist.objects.create(specialization='endocrynologist', name='Vakulenko Mykola Stepanovych')
         spec2.schedule.add(sched2)
 
         spec3 = Specialist.objects.create(specialization='dentist', name='Vakulenko Olga Ivanivna')
         spec3.schedule.add(sched3)
-
 
     def test_workers_list(self):
         response = self.client.get(reverse('list_of_workers'))
@@ -87,12 +86,12 @@ class ClientlistTest(APITestCase):
         self.assertEqual('M', response.json()[0].get('client').get('gender'))
         self.assertEqual('M', response.json()[1].get('client').get('gender'))
         self.assertEqual('W', response.json()[2].get('client').get('gender'))
+
     #
 
     def test_list_appointment(self):
         response = self.client.get(reverse('makeappoint'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # print(response.json())
         self.assertEqual('Prykhodko Mykola Ivanovych', response.json()[0].get('specialist'))
         self.assertEqual('Vakulenko Mykola Stepanovych', response.json()[1].get('specialist'))
         self.assertEqual('Vakulenko Olga Ivanivna', response.json()[2].get('specialist'))
@@ -149,4 +148,3 @@ class ClientlistTest(APITestCase):
         response = self.client.post(reverse('makeappoint'), data=data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual('Специалист с данным именем отсутствует', response.data[0])
-

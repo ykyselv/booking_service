@@ -11,6 +11,7 @@ class LocationSerializer(serializers.ModelSerializer):
 
 class ScheduleSerializer(serializers.ModelSerializer):
     location = LocationSerializer()
+
     class Meta:
         model = Schedule
         fields = '__all__'
@@ -44,19 +45,18 @@ class AppointmentSerializer(serializers.ModelSerializer):
         client_gender = validated_data['client']['gender']
         client_name = validated_data['client']['name']
 
-
         if not Specialist.objects.filter(name=specialist):
-            raise serializers.ValidationError ("Специалист с данным именем отсутствует")
+            raise serializers.ValidationError("Специалист с данным именем отсутствует")
 
         elif (start_appointment >= end_appointment):
-            raise serializers.ValidationError ("Время для записи введено некорректно")
+            raise serializers.ValidationError("Время для записи введено некорректно")
 
         elif (start_appointment < (datetime.now() + timedelta(hours=3))):
-            raise serializers.ValidationError ("К сожалению, записаться на это время невозможно")
+            raise serializers.ValidationError("К сожалению, записаться на это время невозможно")
 
 
         elif not Specialist.objects.filter(schedule__start_appointment__lte=start_appointment,
-                                                schedule__end_appointment__gte=end_appointment,name=specialist):
+                                           schedule__end_appointment__gte=end_appointment, name=specialist):
 
             raise serializers.ValidationError("К сожалению, в это время специалист не принимает")
 
@@ -92,4 +92,3 @@ class AppointmentSerializer(serializers.ModelSerializer):
             )
 
         return new_appoint
-
